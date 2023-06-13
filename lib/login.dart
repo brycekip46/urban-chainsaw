@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import 'package:flutter/material.dart';
+import 'package:shrine/supplemental/colors.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -47,7 +48,6 @@ class _LoginPageState extends State<LoginPage> {
             TextField(
               controller: _usernameController,
               decoration: const InputDecoration(
-                filled: true,
                 labelText: 'Username:',
               ),
             ),
@@ -57,7 +57,6 @@ class _LoginPageState extends State<LoginPage> {
             TextField(
               controller: _passwordController,
               decoration: const InputDecoration(
-                filled: true,
                 labelText: 'Password',
               ),
               obscureText: true,
@@ -69,11 +68,19 @@ class _LoginPageState extends State<LoginPage> {
               alignment: MainAxisAlignment.end,
               children: [
                 TextButton(
+                    style: TextButton.styleFrom(
+                        shape: BeveledRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(7))),
+                        foregroundColor:
+                            Theme.of(context).colorScheme.secondary),
                     onPressed: () {
                       _usernameController.clear();
                       _passwordController.clear();
                     },
                     child: Text("CANCEL")),
+                SizedBox(
+                  width: 10,
+                ),
                 ElevatedButton(
                     onPressed: () {
                       Navigator.pop(context);

@@ -2,6 +2,7 @@
 /home/bryson/Code/brycekip46/material-ui/build/linux/x64/debug/bundle/data/icudtl.dat
 /home/bryson/Code/brycekip46/material-ui/build/linux/x64/debug/bundle/lib/libflutter_linux_gtk.so
 /home/bryson/Code/brycekip46/material-ui/build/linux/x64/debug/bundle/data/flutter_assets/fonts/MaterialIcons-Regular.otf
+/home/bryson/Code/brycekip46/material-ui/build/linux/x64/debug/bundle/data/flutter_assets/fonts/Rubik-Regular.ttf
 /home/bryson/Code/brycekip46/material-ui/build/linux/x64/debug/bundle/data/flutter_assets/assets/3.0x/diamond.png
 /home/bryson/Code/brycekip46/material-ui/build/linux/x64/debug/bundle/data/flutter_assets/assets/2.0x/diamond.png
 /home/bryson/Code/brycekip46/material-ui/build/linux/x64/debug/bundle/data/flutter_assets/assets/diamond.png
