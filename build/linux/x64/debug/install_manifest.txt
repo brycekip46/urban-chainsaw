@@ -124,6 +124,7 @@
 /home/bryson/Code/brycekip46/material-ui/build/linux/x64/debug/bundle/data/flutter_assets/packages/shrine_images/32-0.jpg
 /home/bryson/Code/brycekip46/material-ui/build/linux/x64/debug/bundle/data/flutter_assets/AssetManifest.json
 /home/bryson/Code/brycekip46/material-ui/build/linux/x64/debug/bundle/data/flutter_assets/NOTICES.Z
+/home/bryson/Code/brycekip46/material-ui/build/linux/x64/debug/bundle/data/flutter_assets/NOTICES
 /home/bryson/Code/brycekip46/material-ui/build/linux/x64/debug/bundle/data/flutter_assets/AssetManifest.smcbin
 /home/bryson/Code/brycekip46/material-ui/build/linux/x64/debug/bundle/data/flutter_assets/FontManifest.json
 /home/bryson/Code/brycekip46/material-ui/build/linux/x64/debug/bundle/data/flutter_assets/version.json
