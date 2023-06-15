@@ -1,0 +1,4 @@
+#Thu Jun 15 12:52:17 EAT 2023
+base.0=/home/bryson/Code/brycekip46/material-ui/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
+path.0=classes.dex
+renamed.0=classes.dex

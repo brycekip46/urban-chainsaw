@@ -54,6 +54,14 @@ class _LoginPageState extends State<LoginPage> {
               alignment: MainAxisAlignment.end,
               children: [
                 TextButton(
+                  onHover: (value) {},
+                  onPressed: () {},
+                  child: Text(
+                    "Forgot your password ?",
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ),
+                TextButton(
                     style: TextButton.styleFrom(
                         shape: BeveledRectangleBorder(
                             borderRadius: BorderRadius.all(Radius.circular(7))),

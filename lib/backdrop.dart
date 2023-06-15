@@ -39,6 +39,17 @@ class _BackDropState extends State<BackDrop>
   }
 
   @override
+  void didUpdateWidget(BackDrop oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+    if (widget.currentCategory != oldWidget.currentCategory) {
+      _toggleBackdropVisibility();
+    } else if (!_frontLayerVisible) {
+      _controller.fling(velocity: flingVelocity);
+    }
+  }
+
+  @override
   void dispose() {
     // TODO: implement dispose
     _controller.dispose();
@@ -56,8 +67,8 @@ class _BackDropState extends State<BackDrop>
         velocity: _frontLayerVisible ? -flingVelocity : flingVelocity);
   }
 
-  Widget _buildStack(BoxConstraints constraints, BuildContext context) {
-    const double layerTitleHeight = 48;
+  Widget buildStack(BuildContext context, BoxConstraints constraints) {
+    const double layerTitleHeight = 20;
     final Size layerSize = constraints.biggest;
     final double layerTop = layerSize.height - layerTitleHeight;
 
@@ -70,11 +81,16 @@ class _BackDropState extends State<BackDrop>
       key: _backDropKey,
       children: [
         ExcludeSemantics(
-            excluding: _frontLayerVisible, child: widget.backLayer),
+          excluding: _frontLayerVisible,
+          child: widget.backLayer,
+        ),
         PositionedTransition(
           rect: layerAnimation,
-          child: FrontLayer(child: widget.frontLayer),
-        )
+          child: FrontLayer(
+            child: widget.frontLayer,
+            onTap: _toggleBackdropVisibility,
+          ),
+        ),
       ],
     );
   }
@@ -84,8 +100,12 @@ class _BackDropState extends State<BackDrop>
     var appBar = AppBar(
       elevation: 0.0,
       titleSpacing: 0.0,
-      leading: Icon(Icons.menu),
-      title: Text("SHRINE"),
+      title: BackDropTitle(
+        backtitle: widget.backTitle,
+        listenable: _controller.view,
+        onPress: _toggleBackdropVisibility,
+        frontTitle: widget.frontTitle,
+      ),
       actions: [
         IconButton(
           onPressed: () {
@@ -108,15 +128,14 @@ class _BackDropState extends State<BackDrop>
             ))
       ],
     );
-    return Scaffold(
-      appBar: appBar,
-      body: _buildStack(),
-    );
+    return Scaffold(appBar: appBar, body: LayoutBuilder(builder: buildStack));
   }
 }
 
 class FrontLayer extends StatelessWidget {
-  const FrontLayer({Key? key, required this.child}) : super(key: key);
+  final VoidCallback? onTap;
+  const FrontLayer({Key? key, this.onTap, required this.child})
+      : super(key: key);
 
   final Widget child;
 
@@ -128,10 +147,101 @@ class FrontLayer extends StatelessWidget {
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(46), topRight: Radius.circular(46))),
       child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [Expanded(child: child)]),
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: onTap,
+              child: Container(
+                height: 40,
+                alignment: AlignmentDirectional.centerStart,
+              ),
+            ),
+            Expanded(child: child)
+          ]),
     );
   }
 }
 
 const double flingVelocity = 2.0;
+
+class BackDropTitle extends AnimatedWidget {
+  final void Function() onPress;
+  final Widget frontTitle;
+  final Widget backtitle;
+
+  const BackDropTitle({
+    Key? key,
+    required this.backtitle,
+    required this.frontTitle,
+    required this.onPress,
+    required Animation<double> listenable,
+  })  : _listenable = listenable,
+        super(key: key, listenable: listenable);
+
+  final Animation<double> _listenable;
+
+  @override
+  Widget build(BuildContext context) {
+    final Animation<double> animation = _listenable;
+    // TODO: implement build
+    return DefaultTextStyle(
+        style: Theme.of(context).textTheme.titleLarge!,
+        softWrap: false,
+        overflow: TextOverflow.ellipsis,
+        child: Row(
+          children: [
+            SizedBox(
+              width: 72,
+              child: IconButton(
+                padding: const EdgeInsets.only(right: 10),
+                onPressed: this.onPress,
+                icon: Stack(children: [
+                  Opacity(
+                    opacity: animation.value,
+                    child:
+                        const ImageIcon(AssetImage('assets/slanted_menu.png')),
+                  ),
+                  FractionalTranslation(
+                    translation: Tween<Offset>(
+                      begin: Offset.zero,
+                      end: const Offset(1.0, 0.0),
+                    ).evaluate(animation),
+                    child: const ImageIcon(AssetImage('assets/diamond.png')),
+                  )
+                ]),
+              ),
+            ),
+            Stack(
+              children: [
+                Opacity(
+                  opacity: CurvedAnimation(
+                          parent: ReverseAnimation(animation),
+                          curve: Interval(0.5, 1.0))
+                      .value,
+                  child: FractionalTranslation(
+                    translation:
+                        Tween<Offset>(begin: Offset.zero, end: Offset(0.5, 0.0))
+                            .evaluate(animation),
+                    child: backtitle,
+                  ),
+                ),
+                Opacity(
+                  opacity: CurvedAnimation(
+                          parent: animation, curve: Interval(0.5, 1))
+                      .value,
+                  child: FractionalTranslation(
+                    translation: Tween<Offset>(
+                      begin: Offset(-0.25, 0.0),
+                      end: Offset.zero,
+                    ).evaluate(animation),
+                    child: frontTitle,
+                  ),
+                )
+              ],
+            )
+          ],
+        ));
+  }
+}
