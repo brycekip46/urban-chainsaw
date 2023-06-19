@@ -1,24 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shrine/model/product.dart';
-import 'package:shrine/model/products_repository.dart';
 
-class Symmetric_view extends StatelessWidget {
+class Symmetric_view extends StatefulWidget {
   final List<Product> products;
   const Symmetric_view({Key? key, required this.products}) : super(key: key);
 
+  @override
+  State<Symmetric_view> createState() => _Symmetric_viewState();
+}
+
+class _Symmetric_viewState extends State<Symmetric_view> {
+  double screenWidth = 600;
+  int crossAxisCount = 2;
+
+  void calculateCrossAxisCount() {
+    // Calculate the crossAxisCount based on the screen width increment
+
+    if (screenWidth < 600) {
+      crossAxisCount = 2;
+    } else {
+      crossAxisCount = (screenWidth / 200).floor();
+    }
+    // Update the state to reflect the new crossAxisCount
+  }
+
   List<Card> _buildCards(BuildContext context) {
-    if (products.isEmpty) {
+    if (widget.products.isEmpty) {
       return const <Card>[];
     }
     final ThemeData theme = Theme.of(context);
     final NumberFormat format = NumberFormat.simpleCurrency(
         locale: Localizations.localeOf(context).toString());
-    return products.map((product) {
+    return widget.products.map((product) {
       return Card(
         elevation: 0.0,
         clipBehavior: Clip.antiAlias,
-        // TODO: Adjust card heights (103)
         child: Column(
           // TODO: Center items on the card (103)
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,7 +54,6 @@ class Symmetric_view extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  // TODO: Change innermost Column (103)
                   children: <Widget>[
                     // TODO: Handle overflowing labels (103)
                     Text(
@@ -62,11 +78,26 @@ class Symmetric_view extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.count(
-      crossAxisCount: 2,
-      padding: EdgeInsets.all(16),
-      childAspectRatio: 8.0 / 9.0,
-      children: _buildCards(context),
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // Calculate initial crossAxisCount based on the current screen width
+      screenWidth = MediaQuery.of(context).size.width;
+      calculateCrossAxisCount();
+      setState(() {});
+    });
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        screenWidth = constraints.maxWidth;
+        calculateCrossAxisCount();
+
+        return OrientationBuilder(builder: (context, constraints) {
+          return GridView.count(
+            crossAxisCount: crossAxisCount,
+            padding: EdgeInsets.all(16),
+            childAspectRatio: 8.0 / 9.0,
+            children: _buildCards(context),
+          );
+        });
+      },
     );
   }
 }

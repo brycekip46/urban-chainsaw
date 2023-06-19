@@ -16,17 +16,15 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^1.0.0
-
-flutter:
   
-  fonts:  
-    - family: Rubik
+flutter:
+   fonts:  
+    - family: Rubiassetsk
       fonts:
         - asset: fonts/Rubik-Regular.ttf
           weight: 500
           
-  uses-material-design: true
-  assets:
+   assets:
     - assets/diamond.png
     - assets/slanted_menu.png
     - packages/shrine_images/0-0.jpg
@@ -67,3 +65,5 @@ flutter:
     - packages/shrine_images/35-0.jpg
     - packages/shrine_images/36-0.jpg
     - packages/shrine_images/37-0.jpg
+
+   
