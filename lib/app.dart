@@ -35,12 +35,12 @@ class _ShrineAppState extends State<ShrineApp> {
         '/': (BuildContext context) => BackDrop(
             backLayer: CategoryMenuPage(
                 currentCategory: currentCat, onCategoryTap: _onCategoryTap),
-            backTitle: Text("MENU"),
+            backTitle: const Text("MENU"),
             currentCategory: Category.all,
             frontLayer: HomePage(
               category: currentCat,
             ),
-            frontTitle: Text("Shrine Shop")),
+            frontTitle: const Text("Shrine Shop")),
       },
       theme: shrineTheme,
     );
@@ -56,7 +56,7 @@ ThemeData _buildTheme() {
               foregroundColor: kShrineBrown900,
               backgroundColor: kShrinePink100,
               elevation: 8.0,
-              shape: BeveledRectangleBorder(
+              shape: const BeveledRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(7)),
               ))),
       inputDecorationTheme: const InputDecorationTheme(
@@ -73,7 +73,7 @@ ThemeData _buildTheme() {
       ),
       textTheme: buildShrineTextTheme(base.textTheme),
       textSelectionTheme:
-          TextSelectionThemeData(selectionColor: kShrinePink100),
+          const TextSelectionThemeData(selectionColor: kShrinePink100),
       appBarTheme: const AppBarTheme(
         foregroundColor: kShrineBrown900,
         backgroundColor: kShrinePink100,
