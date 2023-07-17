@@ -26,56 +26,58 @@ class _Symmetric_viewState extends State<Symmetric_view> {
     // Update the state to reflect the new crossAxisCount
   }
 
-  List<InkWell> _buildCards(BuildContext context) {
+  List<GestureDetector> _buildCards(BuildContext context) {
     if (widget.products.isEmpty) {
-      return const <InkWell>[];
+      return const <GestureDetector>[];
     }
     final ThemeData theme = Theme.of(context);
     final NumberFormat format = NumberFormat.simpleCurrency(
         locale: Localizations.localeOf(context).toString());
     return widget.products.map((product) {
-      return InkWell(
+      return GestureDetector(
+        behavior: HitTestBehavior.opaque,
         onTap: () {},
-        hoverColor: kShrinePink400,
-        focusColor: kShrineBrown900,
-        child: Card(
-          elevation: 10.0,
-          clipBehavior: Clip.antiAlias,
-          child: Column(
-            // TODO: Center items on the card (103)
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              AspectRatio(
-                aspectRatio: 18 / 11,
-                child: Image.asset(
-                  product.assetName,
-                  package: product.assetPackage,
-                  fit: BoxFit.fitWidth,
-                ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      // TODO: Handle overflowing labels (103)
-                      Text(
-                        product.name,
-                        style: theme.textTheme.bodyMedium,
-                        maxLines: 1,
-                      ),
-                      const SizedBox(height: 8.0),
-                      Text(
-                        format.format(product.price),
-                        style: theme.textTheme.bodySmall,
-                      ),
-                    ],
+        child: InkWell(
+          hoverColor: kShrinePink100,
+          child: Card(
+            elevation: 10.0,
+            clipBehavior: Clip.antiAlias,
+            child: Column(
+              // TODO: Center items on the card (103)
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                AspectRatio(
+                  aspectRatio: 18 / 11,
+                  child: Image.asset(
+                    product.assetName,
+                    package: product.assetPackage,
+                    fit: BoxFit.fitWidth,
                   ),
                 ),
-              ),
-            ],
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 8.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        // TODO: Handle overflowing labels (103)
+                        Text(
+                          product.name,
+                          style: theme.textTheme.bodyMedium,
+                          maxLines: 1,
+                        ),
+                        const SizedBox(height: 8.0),
+                        Text(
+                          format.format(product.price),
+                          style: theme.textTheme.bodySmall,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       );

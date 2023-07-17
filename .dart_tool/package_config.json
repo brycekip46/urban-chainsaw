@@ -98,8 +98,20 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "nested",
+      "rootUri": "file:///home/bryson/.pub-cache/hosted/pub.dev/nested-1.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "path",
       "rootUri": "file:///home/bryson/.pub-cache/hosted/pub.dev/path-1.8.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "provider",
+      "rootUri": "file:///home/bryson/.pub-cache/hosted/pub.dev/provider-6.0.5",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -164,7 +176,7 @@
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2023-06-28T12:52:33.178509Z",
+  "generated": "2023-07-17T10:29:24.308463Z",
   "generator": "pub",
   "generatorVersion": "3.0.5"
 }
